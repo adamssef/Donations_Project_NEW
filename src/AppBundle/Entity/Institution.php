@@ -3,16 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
 
 /**
- * Category
+ * Institution
  *
- * @ORM\Table(name="category")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
+ * @ORM\Table(name="institution")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\InstitutionRepository")
  */
-class Category
+class Institution
 {
     /**
      * @var int
@@ -24,7 +22,7 @@ class Category
     private $id;
 
     /**
-     * @ManyToMany(targetEntity="Donations", mappedBy="categories")
+     * @ORM\OneToMany(targetEntity="Donation", mappedBy="institution")
      */
     private $donations;
 
@@ -34,6 +32,13 @@ class Category
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     */
+    private $description;
 
 
     /**
@@ -51,7 +56,7 @@ class Category
      *
      * @param string $name
      *
-     * @return Category
+     * @return Institution
      */
     public function setName($name)
     {
@@ -69,6 +74,30 @@ class Category
     {
         return $this->name;
     }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Institution
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
     /**
      * Constructor
      */
@@ -80,11 +109,11 @@ class Category
     /**
      * Add donation
      *
-     * @param \AppBundle\Entity\Donations $donation
+     * @param \AppBundle\Entity\Donation $donation
      *
-     * @return Category
+     * @return Institution
      */
-    public function addDonation(\AppBundle\Entity\Donations $donation)
+    public function addDonation(\AppBundle\Entity\Donation $donation)
     {
         $this->donations[] = $donation;
 
@@ -94,9 +123,9 @@ class Category
     /**
      * Remove donation
      *
-     * @param \AppBundle\Entity\Donations $donation
+     * @param \AppBundle\Entity\Donation $donation
      */
-    public function removeDonation(\AppBundle\Entity\Donations $donation)
+    public function removeDonation(\AppBundle\Entity\Donation $donation)
     {
         $this->donations->removeElement($donation);
     }
