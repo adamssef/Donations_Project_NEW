@@ -1,0 +1,14 @@
+<div style="border-color: red; border-style: solid; padding: 20px">
+    <ul class="help--slides-items">
+        {% for institution in institutions %}
+            <li>
+                <div class="col">
+                    <div class="title">{{ institution.name }}</div>
+                </div>
+                <div class="col">
+                    <div class="title">{{ institution.description }}</div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
