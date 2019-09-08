@@ -4,7 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToMany;//do przerobienia, na @ORM
 
 /**
  * Category
@@ -24,7 +24,7 @@ class Category
     private $id;
 
     /**
-     * @ManyToMany(targetEntity="Donations", mappedBy="categories")
+     * @ManyToMany(targetEntity="Donation", mappedBy="categories")
      */
     private $donations;
 
