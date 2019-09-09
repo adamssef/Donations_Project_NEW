@@ -110,4 +110,9 @@ class Category
     {
         return $this->donations;
     }
+
+    public function __toString()
+    {
+            return (string) $this->getName();
+    }
 }
