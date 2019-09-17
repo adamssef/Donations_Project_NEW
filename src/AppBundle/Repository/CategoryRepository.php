@@ -1,7 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
-
+use AppBundle\Entity\Category;
 /**
  * CategoryRepository
  *
@@ -10,4 +10,12 @@ namespace AppBundle\Repository;
  */
 class CategoryRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function listAllCategories()
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder(
+                'SELECT c FROM AppBundle:Category c ORDER BY c.name ASC'
+            );
+    }
 }

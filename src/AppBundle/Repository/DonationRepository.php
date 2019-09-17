@@ -10,4 +10,21 @@ namespace AppBundle\Repository;
  */
 class DonationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getTotalNumberOfDonation()
+    {
+        return $this->getEntityManager()->createQueryBuilder('d')
+            ->SELECT('COUNT(d.id)')
+            ->FROM('AppBundle:Donation', 'd')
+            ->getQuery()
+            ->getSingleScalarResult();//zwraca jedna wartosc (a nie obiekt)
+    }
+
+    public function getTotalNumberOfDonationBags()
+    {
+        return $this->getEntityManager()->createQueryBuilder('d')
+            ->SELECT('SUM(d.quantity)')//poprawiono - zwraca teraz poprawna liczbe donation bags
+            ->FROM('AppBundle:Donation', 'd')
+            ->getQuery()
+            ->getSingleScalarResult();//zwraca jedna wartosc (a nie obiekt)//to implement
+    }
 }

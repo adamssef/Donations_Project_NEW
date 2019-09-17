@@ -44,7 +44,9 @@ class DonationFixtures extends Fixture implements FixtureGroupInterface
         for ($i = 0; $i < 50; $i++) {
             $donation = new Donation();
             $donation->addCategory($categories[array_rand($categories)]);
-            $donation->setInstitution($institutions[array_rand($institutions)]);
+            $randomInstitution = ($institutions[array_rand($institutions)]);
+            
+            $donation->setInstitution($randomInstitution);
             $donation->setQuantity(rand(1, 30));
             $donation->setStreet($this->faker->streetName . ' ' . $this->faker->buildingNumber);
             $donation->setCity($this->faker->city);
@@ -52,7 +54,9 @@ class DonationFixtures extends Fixture implements FixtureGroupInterface
             $donation->setPickUpDate(self::randomDateInRange($startDateTime, $endDateTime));
             $donation->setPickUpTime(self::randomDateInRange($startDateTime, $endDateTime));
             $donation->setPickUpComment($this->faker->text($maxNbChars = 100));
+            $randomInstitution->addDonation($donation);
             $manager->persist($donation);
+            $manager->persist($randomInstitution);
             $manager->flush();
         }
 

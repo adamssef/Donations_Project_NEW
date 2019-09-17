@@ -1,0 +1,14 @@
+{% for category in categories %}
+<div class="form-group form-group--checkbox">
+    <label>
+        <input
+                type="checkbox"
+                name="categories"
+                value="clothes-to-use"
+        />
+        <span class="checkbox"></span>
+        <span class="description">{{ category }}</span
+        >
+    </label>
+</div>
+{% endfor %}

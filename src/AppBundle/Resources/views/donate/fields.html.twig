@@ -1,0 +1,75 @@
+{% block integer_widget %}
+    <div class="form-group form-group--inline">
+        {% set type = type|default('number') %}
+        {{ block('form_widget_simple') }}
+    </div>
+{% endblock %}
+
+{%- block checkbox_widget -%}
+    <div class="form-group form-group--checkbox">
+        <label>
+            <input type="checkbox"
+                   name="categories"
+                   {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}
+                    {% if checked %} checked="checked"{% endif %} />
+            <span class="checkbox"></span>
+            <span class="description"></span>
+        </label>
+    </div>
+{%- endblock checkbox_widget -%}
+
+{%- block radio_widget -%}
+    <div class="form-group form-group--checkbox">
+        <label>
+            <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+            <span class="checkbox radio"></span>
+            <span class="description">
+                <div class="title"></div>
+                <div class="subtitle"></div>
+{#                   <div class="title">zxczxc</div>#}
+                {#                  <div class="subtitle">sdfsdfs#}
+                {#                  </div>#}
+                {#                </span>#}
+            </span>
+        </label>
+    </div>
+{%- endblock radio_widget -%}
+
+
+{%- block form_widget_simple -%}
+    {%- set type = type|default('text') -%}
+    {%- if type == 'range' or type == 'color' -%}
+        {# Attribute "required" is not supported #}
+        {%- set required = false -%}
+    {%- endif -%}
+    <div class="form-group form-group--inline">
+        <label>
+            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        </label>
+    </div>
+{%- endblock form_widget_simple -%}
+
+{%- block date_widget -%}
+    {%- if widget == 'single_text' -%}
+        {{ block('form_widget_simple') }}
+    {%- else -%}
+        <div class="form-group form-group--inline" {{ block('widget_container_attributes') }}>
+            {{- date_pattern|replace({
+                '{{ year }}':  form_widget(form.year),
+                '{{ month }}': form_widget(form.month),
+                '{{ day }}':   form_widget(form.day),
+            })|raw -}}
+        </div>
+    {%- endif -%}
+{%- endblock date_widget -%}
+
+{%- block time_widget -%}
+    {%- if widget == 'single_text' -%}
+        {{ block('form_widget_simple') }}
+    {%- else -%}
+        {%- set vars = widget == 'text' ? { 'attr': { 'size': 1 }} : {} -%}
+        <div class="form-group--inline form-group" {{ block('widget_container_attributes') }}>
+            {{ form_widget(form.hour, vars) }}{% if with_minutes %}:{{ form_widget(form.minute, vars) }}{% endif %}{% if with_seconds %}:{{ form_widget(form.second, vars) }}{% endif %}
+        </div>
+    {%- endif -%}
+{%- endblock time_widget -%}

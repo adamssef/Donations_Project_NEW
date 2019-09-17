@@ -19,46 +19,56 @@ class HomeController extends Controller
     {
         return $this->render('@App/home/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
-            'institutions' => $this->getInstitutionsAction(),
         ]);
     }
 
-    public function getInstitutionsAction()
+    public function getInstitutionsAction()//GET ALL INSTITUTUTIONS - TO BE PLACED IN REPOSITORY
     {
         $em = $this->getDoctrine()->getManager();
-        $institutions = $em->getRepository(Institution::class)->findAll();
+        $institutions = $em->getRepository(Institution::class)->getInstitutionsOrderedByDonations();
+//        $result = $institutions->createQueryBuilder('i')
+//            ->select('i, d')
+//            ->join('i.donations', 'd')
+//            ->orderBy('d.quantity')
+//            ->getQuery()
+//            ->getResult();
+
+
 
         return $this->render('@App/institutions.html.twig', [
-            'institutions' => $institutions
+            'institutions' => $institutions,
         ]);
     }
 
-    public function getTotalNumberOfDonationBagsAction()
+    public function getTotalNumberOfDonationBagsAction() //TO BE PLACED IN REPOSITORY
     {
         $em = $this->getDoctrine()->getManager();
-        $donations = $em->getRepository(Donation::class)->findAll();
-        $bagsTotal= 0;
-        foreach ($donations as $donation) {
-            $bagsTotal += $donation->getQuantity();
-        }
+        $donations = $em->getRepository(Donation::class)->getTotalNumberOfDonationBags();
+//        $result = $donations->createQueryBuilder('d')
+//            ->select('SUM(d.quantity) as totalBags')
+//            ->getQuery()
+//            ->getResult();
+
+
 
         return $this->render('@App/totalBags.html.twig', [
-            'bagsTotal' => $bagsTotal,
+            'bagsTotal' => $donations,
         ]);
     }
 
 
-    public function getTotalNumberOfInstitutionsAction()
+    public function getTotalNumberOfInstitutionsAction() //TO BE PLACED IN REPOSITORY
     {
         $em = $this->getDoctrine()->getManager();
-        $institutions = $em->getRepository(Institution::class)->findAll();
-        $institutionTotal= 0;
-        foreach ($institutions as $institution) {
-            $institutionTotal ++;
-        }
+        $institutions = $em->getRepository(Institution::class)->getTotalNumberOfOrgs();
+//        $result = $institutions->createQueryBuilder('i')
+//            ->SELECT('COUNT(i.id) as numberOfOrgs')
+//            ->getQuery()
+//            ->getResult();
+
 
         return $this->render('@App/totalOrgs.html.twig', [
-            'totalOrgs' => $institutionTotal,
+            'totalOrgs' => $institutions,
         ]);
     }
 }

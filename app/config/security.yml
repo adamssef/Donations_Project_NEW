@@ -1,11 +1,21 @@
 # To get started with security, check out the documentation:
 # https://symfony.com/doc/current/security.html
 security:
-
+    encoders:
+        Symfony\Component\Security\Core\User:
+            algorithm: bcrypt
+            cost: 12
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    adam:
+                        password: $2y$12$xvVc/oGPOJiodj3dMzgIs.X0wy/ynUCixwJQH2X7CzkZyFRdkpfxu
+                        roles: 'ROLE_ADMIN'
+                    admin:
+                        password: $2y$12$16YxAc/pIYlwtMeRbWoVIOnqEQC8d2bJsKPpcdRbySGqT.I38e.n2
+                        roles: 'ROLE_USER'
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -15,6 +25,11 @@ security:
 
         main:
             anonymous: ~
+            http_basic: ~
+
+
+
+
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
@@ -22,3 +37,5 @@ security:
 
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
+    access_control:
+        - { path: ^/donation/new, roles: [ROLE_USER, ROLE_ADMIN] }

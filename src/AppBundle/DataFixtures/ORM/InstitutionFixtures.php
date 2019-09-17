@@ -2,6 +2,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Institution;
+use AppBundle\Entity\Donation;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;

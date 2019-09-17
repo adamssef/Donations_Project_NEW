@@ -139,4 +139,9 @@ class Institution
     {
         return $this->donations;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
