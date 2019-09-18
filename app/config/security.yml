@@ -2,40 +2,24 @@
 # https://symfony.com/doc/current/security.html
 security:
     encoders:
-        Symfony\Component\Security\Core\User:
-            algorithm: bcrypt
-            cost: 12
-    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+        FOS\UserBundle\Model\UserInterface: bcrypt
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
     providers:
-        in_memory:
-            memory:
-                users:
-                    adam:
-                        password: $2y$12$xvVc/oGPOJiodj3dMzgIs.X0wy/ynUCixwJQH2X7CzkZyFRdkpfxu
-                        roles: 'ROLE_ADMIN'
-                    admin:
-                        password: $2y$12$16YxAc/pIYlwtMeRbWoVIOnqEQC8d2bJsKPpcdRbySGqT.I38e.n2
-                        roles: 'ROLE_USER'
-
+        fos_userbundle:
+            id: fos_user.user_provider.username
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
         main:
-            anonymous: ~
-            http_basic: ~
-
-
-
-
-            # activate different ways to authenticate
-
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+            logout: true
+            anonymous: true
     access_control:
-        - { path: ^/donation/new, roles: [ROLE_USER, ROLE_ADMIN] }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: ROLE_ADMIN }
+
