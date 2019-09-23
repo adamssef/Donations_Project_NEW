@@ -6,34 +6,47 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"/>
+
     {% endblock %}
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
 </head>
 
 
 {% block body %}
 <body>
+{% block header %}
 <header class="header--form-page">
     <nav class="container container--70">
         <ul class="nav--actions">
             <li class="logged-user">
-                Witaj Agata
+                {% if logname is defined and logname  %}
+                Zalogowano jako <b> {{ logname }} </b>
+
+                {% else %}
+                Witaj Użytkowniku!
+                {% endif %}
                 <ul class="dropdown">
                     <li><a href="#">Profil</a></li>
                     <li><a href="#">Ustawienia</a></li>
                     <li><a href="#">Moje zbiórki</a></li>
-                    <li><a href="#">Wyloguj</a></li>
+                    <li><a href="{{ path('logout') }}">Wyloguj</a></li>
                 </ul>
             </li>
         </ul>
 
         <ul>
-            <li><a href="{{ path('homepage') }}" class="btn btn--without-border active">Start</a></li>
-            <li><a href="index.html#steps" class="btn btn--without-border">O co chodzi?</a></li>
-            <li><a href="index.html#about-us" class="btn btn--without-border">O nas</a></li>
-            <li><a href="index.html#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
-            <li><a href="index.html#contact" class="btn btn--without-border">Kontakt</a></li>
+            <li><a href="{{ path('index') }}" class="btn btn--without-border active">Start</a></li>
+            <li><a href="{{ path('index')}}#steps" class="btn btn--without-border">O co chodzi?</a></li>
+            <li><a href="{{ path('index')}}#about-us" class="btn btn--without-border">O nas</a></li>
+            <li><a href="{{ path('index')}}#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
+            <li><a href="{{ path('index')}}#contact" class="btn btn--without-border">Kontakt</a></li>
         </ul>
     </nav>
 
@@ -61,4 +74,5 @@
         </div>
     </div>
 </header>
-{% endblock %}
+{% endblock header %}
+{% endblock body %}

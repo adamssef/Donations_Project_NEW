@@ -209,11 +209,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
         //(4) get and set date and time
         let date = [];
-        let year = String(document.getElementById("donation_pickUpDate_year").value);
-        let month = String(document.getElementById("donation_pickUpDate_month").value);
-        let day = String(document.getElementById("donation_pickUpDate_day").value);
-        let hour = String(document.getElementById("donation_pickUpTime_hour").value);
-        let minutes = String(document.getElementById("donation_pickUpTime_minute").value);
+        let date2 = String(document.getElementById("donation_pickUpDate").value);
+        // let month = String(document.getElementById("donation_pickUpDate_month").value);
+        // let day = String(document.getElementById("donation_pickUpDate_day").value);
+        date2exploaded = date2.split('-');
+        console.log(date2exploaded);
+        let year = date2exploaded[0];
+        let month= date2exploaded[1];
+        let day = date2exploaded[2];
+
+        let time2 = String(document.getElementById("donation_pickUpTime").value);
+        let time2exploaded = time2.split(':');
+        let hour = time2exploaded[0];
+        let minutes = time2exploaded[1];
+        // let minutes = String(document.getElementById("donation_pickUpTime_minute").value);
         date.push([year, month, day]);
         // dateString = date[0] + "\-" + date[1] + "\-" + date[2];
         dateTime = new Date(year, month - 1, [day]);

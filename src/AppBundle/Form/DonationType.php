@@ -40,10 +40,12 @@ class DonationType extends AbstractType
             ->add('city', TextType::class)
             ->add('zipCode', TextType::class)
             ->add('pickUpDate', DateType::class, [
-                'widget' => 'choice'
+                'widget' => 'single_text'
             ])
             ->add('pickUpTime', TimeType::class, [
-                'widget' => 'choice']);
+                'widget' => 'single_text',
+                'attr' => ['class' => 'js-datepicker']
+            ]);
         $builder
             ->add('pickUpComment', TextType::class);
 

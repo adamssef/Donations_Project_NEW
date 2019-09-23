@@ -1,6 +1,26 @@
 app:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
 logout:
     path: /logout
 
+index:
+    path: /
+    defaults: { _controller: AppBundle:Home:index}
+
+new:
+    path: /new
+    defaults: { _controller: AppBundle:Donation:new}
+
+donation_confirmation:
+    path:  /success
+    defaults: { _controller: AppBundle:Donation:formConfirmation}
+
+fos_user_security_login:
+    path: /login
+    defaults: { _controller: FOSUserBundle:Security:login }
+
+fos_user_registration_register:
+    path: /register
+    defaults: { _controller: FOSUserBundle:Registration:register }
 

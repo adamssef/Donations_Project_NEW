@@ -1,5 +1,20 @@
 {% extends '@App/base.html.twig' %}
 {% form_theme form '@App/donate/fields.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+{% endblock stylesheets %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            $('.js-datepicker').datepicker();
+        });
+    </script>
+{% endblock javascripts %}
     {% block body %}
         {{ parent() }}
 
@@ -12,11 +27,11 @@
                         wiedzieć komu najlepiej je przekazać.
                     </p>
                     <p data-step="2">
-                        Uzupełnij szczegóły dotyczące Twoich rzeczy. Dzięki temu będziemy
-                        wiedzieć komu najlepiej je przekazać.
+                        Uzupełnij informacje dotyczące liczby worków, które chcesz przekazać. Te informacje zostaną
+                        przekazane kurierowi.
                     </p>
                     <p data-step="3">
-                        Wybierz jedną, do
+                        Wybierz jedną z organizacji które wspieramy, do
                         której trafi Twoja przesyłka.
                     </p>
                     <p data-step="4">Podaj adres oraz termin odbioru rzeczy.</p>

@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Institution;
 use AppBundle\Entity\Donation;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use  Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,7 @@ class HomeController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'you dont have access');
         return $this->render('@App/home/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
         ]);
@@ -26,12 +28,7 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $institutions = $em->getRepository(Institution::class)->getInstitutionsOrderedByDonations();
-//        $result = $institutions->createQueryBuilder('i')
-//            ->select('i, d')
-//            ->join('i.donations', 'd')
-//            ->orderBy('d.quantity')
-//            ->getQuery()
-//            ->getResult();
+
 
 
 
@@ -44,10 +41,7 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $donations = $em->getRepository(Donation::class)->getTotalNumberOfDonationBags();
-//        $result = $donations->createQueryBuilder('d')
-//            ->select('SUM(d.quantity) as totalBags')
-//            ->getQuery()
-//            ->getResult();
+
 
 
 
@@ -61,10 +55,7 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $institutions = $em->getRepository(Institution::class)->getTotalNumberOfOrgs();
-//        $result = $institutions->createQueryBuilder('i')
-//            ->SELECT('COUNT(i.id) as numberOfOrgs')
-//            ->getQuery()
-//            ->getResult();
+
 
 
         return $this->render('@App/totalOrgs.html.twig', [

@@ -1,0 +1,58 @@
+{% extends '@App/base.html.twig' %}
+
+{% block title %}Log in{% endblock title %}
+   {% block header %}
+       <header class="header--form-page">
+
+           <nav>
+               <ul>
+                   <li><a href="{{ path('index') }}" class="btn btn--without-border active">Start</a></li>
+                   <li><a href="{{ path('index') }}#steps" class="btn btn--without-border">O co chodzi?</a></li>
+                   <li><a href="{{ path('index') }}#about-us" class="btn btn--without-border">O nas</a></li>
+                   <li><a href="{{ path('index') }}#help" class="btn btn--without-border">Fundacje i organizacje</a>
+                   </li>
+                   <li><a href="{{ path('index') }}#contact" class="btn btn--without-border">Kontakt</a></li>
+               </ul>
+           </nav>
+       </header>
+   {% endblock header %}
+{% block body %}
+
+    {{ parent() }}
+    <div class="container mb-5 center-me">
+        <div class="col-md-100">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+                {#        {% else %}#}
+                {#            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>#}
+            {% endif %}
+            <div>
+                {% block content %}
+                    {% block fos_user_content %}{% endblock %}
+                {% endblock content %}
+            </div>
+        </div>
+    </div>
+
+
+
+    {% if app.request.hasPreviousSession %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="flash-{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+
+
+
+{% endblock body %}
+{% block endHTML %}
+    </html>
+{% endblock endHTML %}

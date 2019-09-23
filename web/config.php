@@ -295,6 +295,7 @@ $hasMinorProblems = (bool) count($minorProblems);
             .sf-reset .symfony-install-continue li {
                 padding-bottom: 10px;
             }
+
             .sf-reset .ok {
                 color: #fff;
                 font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
