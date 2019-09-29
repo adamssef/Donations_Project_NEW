@@ -18,7 +18,6 @@ class HomeController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'you dont have access');
         return $this->render('@App/home/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
         ]);

@@ -3,10 +3,10 @@
         {% for institution in institutions %}
             <li>
                 <div class="col">
-                    <div class="title">{{ institution.name }}</div>
+                    <div class="title"><b>{{ institution.name }}</b></div>
                 </div>
                 <div class="col">
-                    <div class="title">{{ institution.description }}</div>
+                    <div class="title"><div class="italic">"{{ institution.description }}</div></div>
                 </div>
             </li>
         {% endfor %}

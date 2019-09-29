@@ -44,41 +44,41 @@
                 {{ form_start(form) }}
                 <!-- STEP 1 -->
                 <div data-step="1" class="active">
-                    <h3>Zaznacz co chcesz oddać:</h3>
+                    <h3 id="step1">Zaznacz co chcesz oddać:</h3>
                     {% for oneCategory in form.categories %}
                         <p class="one_category" style="font-size:200%">{{ form_label(oneCategory) }}</p>
                         {{ form_widget(oneCategory) }}
                     {% endfor %}
                     <div class="form-group form-group--buttons">
-                        <button type="button" class="btn next-step">Dalej</button>
+                        <button type="button" class="btn next-step" data-buttonNumber="1">Dalej</button>
                     </div>
                 </div>
                 <!-- STEP 2 -->
                 <div data-step="2">
-                    <h3>Podaj liczbę 60l worków, w które spakowałeś/aś rzeczy:</h3>
+                    <h3 id="step2">Podaj liczbę 60l worków, w które spakowałeś/aś rzeczy:</h3>
 
                     <p style="font-size:200%">{{ form_label(form.quantity, "Ilość worków:") }}</h1>
                         {{ form_widget(form.quantity) }}
                     <div class="form-group form-group--buttons">
                         <button type="button" class="btn prev-step">Wstecz</button>
-                        <button type="button" class="btn next-step">Dalej</button>
+                        <button type="button" class="btn next-step" data-buttonNumber="2">Dalej</button>
                     </div>
                 </div>
                 <!-- STEP 3 -->
                 <div data-step="3">
-                    <h3>Wybierz organizacje, której chcesz pomóc:</h3>
+                    <h3 id="step3">Wybierz organizacje, której chcesz pomóc:</h3>
                     {% for oneInstitution in form.institution %}
                         <p style="font-size:200%">{{ form_label(oneInstitution) }}</p>
                         {{ form_widget(oneInstitution) }}
                     {% endfor %}
                     <div class="form-group form-group--buttons">
                         <button type="button" class="btn prev-step">Wstecz</button>
-                        <button type="button" class="btn next-step">Dalej</button>
+                        <button type="button" class="btn next-step" data-buttonNumber="3">Dalej</button>
                     </div>
                 </div>
                 <!-- STEP 4 -->
                 <div data-step="4">
-                    <h3>Podaj adres oraz termin odbioru rzeczy przez kuriera:</h3>
+                    <h3 id="step4">Podaj adres oraz termin odbioru rzeczy przez kuriera:</h3>
                     <p style="font-size:200%">{{ form_label(form.pickUpDate, "Wybierz datę") }}</p>
                     {{ form_widget(form.pickUpDate) }}
 
@@ -101,7 +101,8 @@
 
                     <div class="form-group form-group--buttons">
                         <button type="button" class="btn prev-step">Wstecz</button>
-                        <button type="button" class="btn next-step" id="goToSummary">Dalej</button>
+                        <button type="button" class="btn next-step" id="goToSummary"
+                                data-buttonNumber="4">Dalej</button>
                     </div>
                 </div>
                 <div data-step="5">
@@ -123,7 +124,7 @@
                         <div class="form-section form-section--columns">
                             <div class="form-section--column">
                                 <h4>Adres odbioru darowizny:</h4>
-                                <ul id="addressSummary" style="list-style-type: square">
+                                <ul id="addressSummary" style="margin-left:10px">
                                     <li>Ulica:&nbsp;<b><span id="street"></span></b></li>
                                     <li>Miejscowość:&nbsp;<b><span id="city"></span></b></li>
                                     <li>Kod pocztowy:&nbsp;<b><span id="zipCode"></span></b></li>
@@ -133,7 +134,7 @@
                         <div class=" form-section form-section--columns">
                             <div class="form-section--column">
                                 <h4 id="addressSummary" style="list-style-type: square">Termin odbioru:</h4>
-                                <ul>
+                                <ul style="margin-left:10px">
                                     <li>Data:&nbsp;<b><span id="pickUpDate"></span></b></li>
                                     <li>Komentarz dla kuriera:&nbsp;<b><span id="pickUpComment"></span></b></li>
                                 </ul>

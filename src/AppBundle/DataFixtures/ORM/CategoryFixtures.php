@@ -13,12 +13,13 @@ class CategoryFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
        $categories = [
-           1 =>'clothes',
-           2 =>'food',
-           3 =>'cleaning supplies and cosmetics',
-           4 =>'household goods',
-           5 =>'electronic equipment',
-           6 =>'medicines',
+           1 =>'ubrania',
+           2 =>'jedzenie',
+           3 =>'środki czystości i kosmetyki',
+           4 =>'artykuły AGD',
+           5 =>'sprzęt elektroniczny',
+           6 =>'leki',
+           7 =>'zabawki',
        ];
 
         foreach ($categories as $categoryName) {

@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-
     /**
      * Form Select
      */
@@ -180,7 +179,6 @@ document.addEventListener("DOMContentLoaded", function () {
      */
 
 
-
     document.getElementById('goToSummary').addEventListener('click', function () {
         //(1)get array of all selected categories
         let dataStepFirstElements = document.querySelectorAll('[data-step = "1"]')[1].getElementsByClassName("form-group--checkbox");
@@ -213,9 +211,9 @@ document.addEventListener("DOMContentLoaded", function () {
         // let month = String(document.getElementById("donation_pickUpDate_month").value);
         // let day = String(document.getElementById("donation_pickUpDate_day").value);
         date2exploaded = date2.split('-');
-        console.log(date2exploaded);
+
         let year = date2exploaded[0];
-        let month= date2exploaded[1];
+        let month = date2exploaded[1];
         let day = date2exploaded[2];
 
         let time2 = String(document.getElementById("donation_pickUpTime").value);
@@ -260,9 +258,167 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('zipCode').innerHTML = zipCode;
         //(9) get and set comment for courier
         let comment = document.getElementsByName('donation[pickUpComment]')[0].value;
-        console.log(comment);
+
         document.getElementById('pickUpComment').innerHTML = comment;
     });
+
+    /*
+    Making sure all steps are completed
+     */
+    let nextStepButtons = document.getElementsByClassName('btn next-step');
+
+    function stepVerifier(element, nextStepsButtons) {
+        const events = ['mousedown', 'keypress'];
+
+        switch (element.parentElement.parentElement.dataset.step) {
+            //(1)checks if there are any checkboxes checked during step one
+            case "1":
+                //(a)form is submitted via mouse or touchpad or enter
+                let stepOneNextStepBtn = [...nextStepsButtons][0];
+                stepOneNextStepBtn.disabled = false;
+
+                events.forEach(function (e) {
+                    stepOneNextStepBtn.addEventListener(e, function () {
+                        if (event.code === "Enter" || e === 'mousedown') {
+                            let stepOne = element.parentElement.parentElement;
+                            let [...stepOneInputs] = stepOne.getElementsByTagName("INPUT");
+                            let i = 0;
+                            stepOneInputs.forEach(function (input) {
+                                if (input.checked === true) {
+                                    i++;
+                                }
+                            });
+
+                            if (i === 0) {
+                                stepOneNextStepBtn.disabled = true;
+                                Swal.fire("Proszę zaznaczyć co najmniej jedno pole");
+                                setTimeout(function () {
+                                    stepOneNextStepBtn.disabled = false;
+                                }, 800)
+                            }
+                        }
+
+                    });
+                });
+
+                break;
+            //(2)checks if there is number of bags provided
+            case "2":
+                let stepTwoNextStepBtn = [...nextStepsButtons][1];
+                stepTwoNextStepBtn.disabled = false;
+
+                events.forEach(function (e) {
+                    stepTwoNextStepBtn.addEventListener(e, function () {
+                        let stepTwoInput = $('#donation_quantity')[0].value;
+                        if (event.code === "Enter" || e === 'mousedown') {
+                            if (stepTwoInput === 0 || typeof (stepTwoInput) === undefined || stepTwoInput === "") {
+                                stepTwoNextStepBtn.disabled = true;
+                                Swal.fire("Proszę wpisz ilość worków:)");
+                                setTimeout(function () {
+                                    stepTwoNextStepBtn.disabled = false;
+                                }, 800)
+                            }
+                        }
+                    });
+                });
+                break;
+            //(3)checks if there is a radio button checked
+            case "3":
+                let stepThreeNextStepBtn = [...nextStepsButtons][2];
+                stepThreeNextStepBtn.disabled = false;
+
+                events.forEach(function (e) {
+                    stepThreeNextStepBtn.addEventListener(e, function () {
+                        if (event.code === "Enter" || e === 'mousedown') {
+                            let stepThree = element.parentElement.parentElement;
+
+                            let [...inputs] = stepThree.getElementsByTagName("INPUT");
+                            let i = 0;
+                            inputs.forEach(function (input) {
+                                if (input.checked === true) {
+                                    i++;
+                                }
+                            });
+
+                            if (i === 0) {
+                                stepThreeNextStepBtn.disabled = true;
+                                Swal.fire({
+                                    title: "Wybierz organizację, którą wspierasz",
+                                    type:"warning",
+                                });
+                                setTimeout(function () {
+                                    stepThreeNextStepBtn.disabled = false;
+                                }, 800)
+                            }
+                        }
+                    });
+                });
+
+                break;
+
+            //TODO implement case "4"
+            //(4)checks if all the fields are completed (except comment as it is not mandatory)
+            case "4":
+                let stepFourNextStepBtn = [...nextStepsButtons][3];
+                let stepFour = element.parentElement.parentElement;
+                let [...stepFourInputs] = stepFour.getElementsByTagName('INPUT');
+                stepFourInputs.pop();
+
+                events.forEach(function (e) {
+                    stepFourNextStepBtn.addEventListener(e, function () {
+                        if (event.code === "Enter" || e === 'mousedown') {
+                            let i = 0;
+                            let emptyStepFourFields = [];
+                            stepFourInputs.forEach(function (input) {
+                                input.required = true;
+                                if (input.value === "") {
+                                    i++;
+                                }
+
+                                emptyStepFourFields.push(input.id);
+                            });
+                            emptyStepFourFieldsStrModified = [];
+                            emptyStepFourFields.forEach(field=> {
+                                let element =  field.split('_');
+                                element.shift();
+                                element = element[0].replace(/([A-Z])/g, ' $1');
+                                field = element;
+                                emptyStepFourFieldsStrModified.push(field);
+                            });
+                            let communicateStart = '<ul>';
+                            emptyStepFourFieldsStrModified.forEach(e=>{
+                                communicateStart = communicateStart.concat('<li style="font-size: large">'+e+'</li>;');
+                            });
+
+                            communicateStart.concat('</ul>');
+
+                            console.log(communicateStart);
+
+
+
+                            if (i !== 0) {
+                                stepFourNextStepBtn.disabled = true;
+                                Swal.fire({
+                                    type: 'warning',
+                                    title: "PROSZĘ ZAZNACZ WSZYSTKIE POTRZEBNE POLA",
+                                    html: communicateStart,
+                                });
+                                setTimeout(function () {
+                                    stepFourNextStepBtn.disabled = false;
+                                }, 800)
+                            }
+                        }
+                    });
+                });
+        }
+    }
+
+
+    //Adding event listener on next step buttons
+    [...nextStepButtons].forEach(function (element) {
+        element.addEventListener('click', stepVerifier(element, nextStepButtons));
+    })
+
 });
 
 

@@ -1844,3 +1844,12 @@ footer .bottom-line--icons a img {
   font-size: large;
   margin-bottom: 50px
 }
+
+.italic {
+  font-style: italic;
+}
+
+.list-circle {
+  list-style-type: circle;
+  margin-left: 10px;
+}
